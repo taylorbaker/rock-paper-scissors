@@ -59,11 +59,11 @@ function game() {
 
   console.log('New game!');
   printScore(playerScore, computerScore);
-  for (let i = 0; i <= 5; i++) {
-    if (playerScore >= 3) {
+  for (let i = 0; i <= 9; i++) { // best of 9
+    if (playerScore >= 5) { // player wins at 5
       console.log('You win the game!!');
       break;
-    } else if (computerScore >= 3) {
+    } else if (computerScore >= 5) { // computer wins at 5
       console.log('You lose the game :(');
       break;
     } else {
