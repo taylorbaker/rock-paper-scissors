@@ -14,15 +14,20 @@ function computerPlay() {
     return 'Scissors';
 }
 
-// Add click event listeners to player choice buttons
+// Add click event listeners to player choice images
 
-const buttons = document.querySelectorAll('button');
+const images = document.querySelectorAll('img');
 const roundResultPara = document.querySelector('p');
 const scorePara = roundResultPara.nextElementSibling;
 
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener("click", () => {
-    let playerPlay = buttons[i].innerText;
+for (let i = 0; i < images.length; i++) {
+  images[i].addEventListener('click', () => {
+    let playerPlay = '';
+
+    if (i === 0) playerPlay = 'Rock';
+    else if (i === 1) playerPlay = 'Paper';
+    else if (i === 2) playerPlay = 'Scissors';
+
     let result = playRound(playerPlay, computerPlay());
     roundResultPara.textContent = result;
     console.log(result);

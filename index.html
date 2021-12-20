@@ -3,6 +3,10 @@
 <head>
   <title>Rock Paper Scissors</title>
   <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -10,10 +14,11 @@
   <p id='round-result'>First to 5, you vs computer</p>
   <p id='score'>Make your selection to begin!</p>
   <div id='container'>
-    <button id='button-r'>Rock</button>
-    <button id='button-p'>Paper</button>
-    <button id='button-s'>Scissors</button>
+    <img src='./Img/rock.png' alt='Rock'>
+    <img src='./Img/paper.png' alt='Paper'>
+    <img src='./Img/scissors.png' alt='Scissors'>
   </div>
+  <!-- At bottom to ensure DOM loads before js manip -->
   <script src="script.js"></script>
 </body>
 </html>
