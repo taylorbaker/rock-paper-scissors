@@ -1,3 +1,7 @@
+// initialize score counters
+
+let playerScore = computerScore = 0;
+
 // use random() to determine computer play
 
 function computerPlay() {
@@ -10,22 +14,21 @@ function computerPlay() {
     return 'Scissors';
 }
 
-// use regex and prompt() to get player play
+// Add click event listeners to player choice buttons
 
-function playerPlay() {
-  const rockReg = /rock/i;
-  const paperReg = /paper/i;
-  const scissorsReg = /scissors/i;
+const buttons = document.querySelectorAll('button');
+const roundResultPara = document.querySelector('p');
+const scorePara = roundResultPara.nextElementSibling;
 
-  const rawResult = window.prompt('Name your play:', 'e.g. Rock');
-  if (rockReg.test(rawResult))
-    return 'Rock';
-  else if (paperReg.test(rawResult))
-    return 'Paper';
-  else if (scissorsReg.test(rawResult))
-    return 'Scissors';
-  else
-    console.log('Please provide a valid entry.');
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", () => {
+    let playerPlay = buttons[i].innerText;
+    let result = playRound(playerPlay, computerPlay());
+    roundResultPara.textContent = result;
+    console.log(result);
+    printScore();
+    checkWin();
+  });
 }
 
 // logic behind result statement from player and computer plays
@@ -33,65 +36,47 @@ function playerPlay() {
 function playRound(playerSelection, computerSelection) {
   if (playerSelection  === computerSelection)
     return 'Draw! Play again!';
-  else if (playerSelection === 'Rock' && computerSelection === 'Paper' )
+  else if (playerSelection === 'Rock' && computerSelection === 'Paper' ) {
+    computerScore += 1;
     return 'You lose! Paper beats Rock';
-  else if (playerSelection === 'Paper' && computerSelection === 'Scissors' )
+  } else if (playerSelection === 'Paper' && computerSelection === 'Scissors' ) {
+    computerScore += 1;
     return 'You lose! Scissors beats Paper';
-  else if (playerSelection === 'Scissors' && computerSelection === 'Rock' )
+  } else if (playerSelection === 'Scissors' && computerSelection === 'Rock' ) {
+    computerScore += 1;
     return 'You lose! Rock beats Scissors';
-  else if (playerSelection === 'Rock' && computerSelection === 'Scissors' )
+  } else if (playerSelection === 'Rock' && computerSelection === 'Scissors' ) {
+    playerScore += 1;
     return 'You win! Rock beats Scissors!';
-  else if (playerSelection === 'Paper' && computerSelection === 'Rock' )
+  } else if (playerSelection === 'Paper' && computerSelection === 'Rock' ) {
+    playerScore += 1;
     return 'You win! Paper beats Rock!';
-  else if (playerSelection === 'Scissors' && computerSelection === 'Paper' )
+  } else if (playerSelection === 'Scissors' && computerSelection === 'Paper' ) {
+    playerScore += 1;
     return 'You win! Scissors beats Paper!';
-  else
+  } else
     return 'How did that happen?...';
 }
 
-// game logic 
+// check if game over
 
-function game() {
-  let playerScore = computerScore = 0;
-  const winReg = /^You win/;
-  const loseReg = /^You lose/;
-  const drawReg = /^Draw/;
-
-  console.log('New game!');
-  printScore(playerScore, computerScore);
-  for (let i = 0; i <= 9; i++) { // best of 9
-    if (playerScore >= 5) { // player wins at 5
-      console.log('You win the game!!');
-      break;
-    } else if (computerScore >= 5) { // computer wins at 5
-      console.log('You lose the game :(');
-      break;
-    } else {
-      let result = playRound(playerPlay(), computerPlay());
-      if (winReg.test(result)) {
-	console.log(result);
-        playerScore++;
-        printScore(playerScore, computerScore);
-      } else if (loseReg.test(result)) {
-        console.log(result);
-	computerScore++;
-        printScore(playerScore, computerScore);
-      } else {
-        console.log(result);
-	printScore(playerScore, computerScore);
-        // reset index by 1 for 'draw' condition
-	i--;
-      }
-    }
+function checkWin() {
+  if (playerScore >= 5) { // player wins at 5
+    console.log('You win the game!!');
+    roundResultPara.textContent = 'You win the game!!';
+    playerScore = computerScore = 0;
+  } else if (computerScore >= 5) { // computer wins at 5
+    console.log('You lose the game :(');
+    roundResultPara.textContent = 'You lose the game :(';
+    playerScore = computerScore = 0;
   }
 }
 
 // helper to display current score
 
-function printScore(pS, cS) {
-  console.log('Player ' + pS + ' - ' + cS + ' Computer');
+function printScore() {
+  let scoreStr = 'Player ' + playerScore + ' - ' + computerScore + ' Computer';
+  console.log(scoreStr);
+  scorePara.textContent = scoreStr;
 }
 
-// formal call to begin game 
-
-game();
